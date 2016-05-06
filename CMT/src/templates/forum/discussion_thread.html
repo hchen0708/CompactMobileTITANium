@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<a href="{{ discussion.get_origin }}"> Back to discussion list</a>
+
+<table class="table">
+
+<tr><td>
+
+<h3>{{ discussion.title }}</h3>
+
+{{ discussion.content }}<small> via {{ discussion.user }} | {{ discussion.timestamp|date:"m d Y"}}</small><br/> 
+<ul>
+{% for child in discussion.get_children %}								
+<li>{{ child.content }} <small>via {{ child.user }}</small></li>
+{% endfor %}
+</ul>
+
+<div class="reply_discussion">
+<form method="POST" action="#">{% csrf_token %}
+<input type="hidden" name="parent_id" value="{{discussion.id}}"/>
+{{ form.as_p }}
+<input type="submit" class="btn btn-default" value="Add Reply">
+</form>
+</div>
+
+</td></tr>
+
+{% endblock %}

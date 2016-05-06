@@ -1,0 +1,9 @@
+{{% extends 'base.html' %}}
+
+<h1> Course List</h1>
+
+{% for course in courses %}
+<p>
+{{ course.course_code }} - {{ course.title }}
+</p>
+{% endfor %}

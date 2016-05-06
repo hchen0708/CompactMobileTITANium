@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<style>
+.reply_discussion {
+	display:none;
+}
+</style>
+
+{% endblock %}
+
+<script>
+{% block jquery %}
+
+$('.reply_btn').click(function(e){
+        e.preventDefault();
+        $(this).next('.reply_discussion').fadeToggle()
+//         $('.reply_discussion').fadeToggle();
+})
+
+{% endblock %}
+</script>
+
+
+{% block content %}
+
+	<div class="col-sm-offset-1">
+		<h1>{{ course.title }}</h1><br/>
+		<div class="col-sm-6 col-sm-offset-2">
+			<h2>Forum Discussion</h2>
+			<table class="table">		
+				{% for discussion in discussions %}
+					{% if not discussion.is_child %}
+						<tr><td>
+					
+						<h3>{{ discussion.title }}</h3>
+						<h5>{{ discussion.content }}</h5>
+						<!--{{ discussion.id }}-->
+						<small> via {{ discussion.user }} | {{ discussion.timestamp|date:"m d Y"}}</small><br/>
+						<ul>
+						{% for child in discussion.get_children %}
+							<li>{{ child.content }} <small>via {{ child.user }}</small></li>
+						{% endfor %}
+						</ul>
+						<a href="#" class="reply_btn">Reply</a>
+							<!--View Discussion Function will be returned after main functions completed-->
+						<!--<a href="#" class="reply_btn">Reply</a> |<a href="{{discussion.get_absolute_url}}">View Discussion</a>-->
+						<div class="reply_discussion">
+						<form method="POST" action="">{% csrf_token %}
+						<input type="hidden" name="parent_id" value="{{discussion.id}}"/>
+							{{ discussion_form.as_p }}
+						<input type="submit" class="btn btn-default" value="Add Reply">
+						</form>
+						</div>
+
+						</td></tr>
+					{% endif %}
+				{% endfor %}
+
+			</table>
+			<br/><br/>
+			<li>
+			<h3>Add Discussion</h3></li>
+			<form method="POST" action="">{% csrf_token %}
+				{{ discussion_form.as_p }}
+				<input type="submit" class="btn btn-default" value="Submit">
+			</form>
+		</div>
+	</div>
+ 
+
+
+{% endblock %}

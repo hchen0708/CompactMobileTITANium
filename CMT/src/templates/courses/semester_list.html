@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-md-offset-1">
+
+    <h3>Current Semester</h3>
+    {% for semester in queryset %}
+    {% if semester.active %}
+    <a href="{{ semester.get_absolute_url }}">{{ semester }}</a> <br/>
+    {% endif %}
+    {% endfor %}
+    <h3>Previous Semester</h3>
+    {% for semester in queryset %}
+    {% if not semester.active %}
+    <a href="{{ semester.get_absolute_url }}">{{ semester }}</a> <br/>
+    {% endif %}
+    {% endfor %}
+</div>
+
+{% endblock %}

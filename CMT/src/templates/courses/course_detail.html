@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+	<div class="col-sm-offset-1">
+		<h1>{{ course.title }}</h1><br/>
+		<div class="col-sm-6 col-sm-offset-2">
+			<table class="table">
+				<div class="col-sm-offset-1">
+				<a href="{{ course.get_forum_url }}">News forum</a><br/>
+				<!-- <a href="#">News forum</a><br/> -->
+				{{ course.course_description|safe }}
+				</div>
+				{% for activity in activities %}
+					<tr>
+					<div class="col-sm-offset-1">
+					<h3>{{ activity.title }}</h3>
+					<p>{{ activity.content|safe }}</p>
+					</div>
+{#						{% for assignment in assignments %}#}
+{#						{% if assignment.course_activity == activity %}#}
+{#						<br/>#}
+{#						<h4>{{ activity }}</h4>#}
+{#						<br/>#}
+{#						<h4>{{ assignment.course_activity }}</h4>#}
+{#						<h4>{{ assignment.title }}</h4>#}
+{#						{% endif %}#}
+{##}
+{#						{% endfor %}#}
+
+					</td></tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+
+{% endblock %}
