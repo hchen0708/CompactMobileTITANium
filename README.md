@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 # CMT
 Graduate Project - Compact Mobile TITANium
 =======
